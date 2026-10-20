@@ -1,0 +1,130 @@
+#!/usr/bin/env python3
+"""Refresh full Helium IoT Entity API registry, with atomic and fail-closed publishing.
+
+This is NOT a live/reachable-hotspot or RF-coverage feed.
+"""
+import argparse
+import collections
+import datetime as dt
+import json
+import math
+import os
+from pathlib import Path
+import tempfile
+import time
+import requests
+import h3
+from shapely.geometry import shape, Polygon
+from shapely.prepared import prep
+
+ROOT=Path(__file__).resolve().parent
+BASE='https://entities.nft.helium.io/v2/hotspots'
+BOUNDARY_FILE=ROOT/'data'/'municipalities.geojson'
+
+def load_study_area():
+    if not BOUNDARY_FILE.is_file():
+        raise FileNotFoundError(f'{BOUNDARY_FILE} missing; run python fetch_boundaries.py first')
+    geo=json.loads(BOUNDARY_FILE.read_text(encoding='utf-8'))
+    features=geo.get('features',[])
+    if not features: raise RuntimeError('No municipal boundaries found; refusing to publish')
+    names={}; geometries={}
+    for i,f in enumerate(features):
+        properties=f.get('properties') or {}
+        name=properties.get('name') or properties.get('NAME')
+        if not isinstance(name,str) or not name.strip():
+            raise RuntimeError(f'Municipality feature {i} has no name')
+        name=name.strip()
+        if name in names:raise RuntimeError(f'Duplicate municipality name {name}')
+        geom=shape(f['geometry'])
+        if geom.is_empty or not geom.is_valid or geom.geom_type not in ('Polygon','MultiPolygon'):
+            raise RuntimeError(f'Invalid municipal polygon for {name}')
+        names[name]=True;geometries[name]=geom
+    from shapely.ops import unary_union
+    united=unary_union(list(geometries.values()))
+    return geometries,united.bounds,prep(united),{n:prep(g) for n,g in geometries.items()}
+
+def polygon_for_h3(cell):
+    # Shapely requires x=longitude, y=latitude.
+    return Polygon([(lon,lat) for lat,lon in h3.cell_to_boundary(cell)])
+
+
+def run():
+    ap=argparse.ArgumentParser()
+    ap.add_argument('--max-pages',type=int,default=0,help='For smoke tests only: incomplete results never published')
+    ap.add_argument('--delay',type=float,default=.4)
+    ap.add_argument('--min-records',type=int,default=1,help='Minimum regional records accepted')
+    args=ap.parse_args()
+    geometries,bounds,area,prepared=load_study_area()
+    print(f'Loaded {len(geometries)} municipality polygons from {BOUNDARY_FILE}',flush=True)
+    s=requests.Session();s.headers.update({'User-Agent':'helium-nj-map-research/1.0 (daily-public-data-refresh)'})
+    cursor=None;seen=set();page=0;counts=collections.Counter();regional=0;global_records=0
+    memberships={};tested_cells={};accepted_cells=set()
+    # Deduplicate by hotspot's unique asset mapping. Multiple registrations can share a cell.
+    keys=set()
+    while True:
+        if args.max_pages and page>=args.max_pages:
+            raise RuntimeError('Pagination truncated by --max-pages; refusing to publish incomplete data')
+        params={'subnetwork':'iot'}
+        if cursor:params['cursor']=cursor
+        for attempt in range(6):
+            try:
+                response=s.get(BASE,params=params,timeout=50)
+                if response.status_code in (429,500,502,503,504):
+                    raise requests.HTTPError(f'Transient HTTP {response.status_code}')
+                response.raise_for_status()
+                payload=response.json()
+                break
+            except (requests.RequestException,ValueError) as exc:
+                if attempt==5:raise RuntimeError(f'Failed at page {page+1}: {exc}') from exc
+                time.sleep(min(60,2**attempt*3))
+        if not isinstance(payload,dict) or not isinstance(payload.get('items'),list):
+            raise RuntimeError('Unexpected Entity API response; refusing to publish')
+        items=payload['items'];page+=1;global_records+=len(items)
+        for item in items:
+            if not isinstance(item,dict):continue
+            key=item.get('key_to_asset_key') or item.get('entity_key_str')
+            if not key:continue
+            if key in keys:continue
+            keys.add(key)
+            lat,lng=item.get('lat'),item.get('long')
+            if isinstance(lat,(int,float)) and isinstance(lng,(int,float)) and math.isfinite(lat) and math.isfinite(lng):
+                # Coarse prefilter only; the final inclusion test uses polygon intersection.
+                if bounds[0]-.03<=lng<=bounds[2]+.03 and bounds[1]-.03<=lat<=bounds[3]+.03:
+                    cell=h3.latlng_to_cell(lat,lng,8)
+                    if cell not in tested_cells:
+                        poly=polygon_for_h3(cell)
+                        member=[name for name,municipality in prepared.items() if municipality.intersects(poly)] if area.intersects(poly) else []
+                        tested_cells[cell]=member
+                    if tested_cells[cell]:
+                        accepted_cells.add(cell)
+                        counts[cell]+=1;regional+=1
+        next_cursor=payload.get('cursor')
+        if next_cursor is not None and not isinstance(next_cursor,str):
+            raise RuntimeError('Unexpected cursor type')
+        print(f'Page {page}; global rows {global_records}; regional unique records {regional}',flush=True)
+        if not next_cursor:break
+        if next_cursor==cursor or next_cursor in seen:
+            raise RuntimeError('Repeated pagination cursor; refusing incomplete publication')
+        seen.add(next_cursor);cursor=next_cursor
+        time.sleep(max(args.delay,0))
+    if regional<args.min_records or not counts:
+        raise RuntimeError(f'Only {regional} regional records; refusing empty/suspicious publish')
+    output={'metadata':{'source':BASE,'retrieved_utc':dt.datetime.now(dt.timezone.utc).isoformat(),
+        'pages':page,'global_rows_scanned':global_records,'regional_unique_hotspots':regional,
+        'complete':True,'h3_resolution':8,'spatial_filter':'h3_polygon_intersects_municipality',
+        'municipalities':sorted(geometries),'meaning':'Registered/asserted hotspots, NOT active hotspots or RF coverage'},
+        'cells':[{'h3':cell,'count':count,'municipalities':tested_cells[cell]} for cell,count in sorted(counts.items())]}
+    path=ROOT/'data'/'hexes.json';path.parent.mkdir(parents=True,exist_ok=True)
+    # Keep existing valid data if upstream behaves suspiciously.
+    if path.exists():
+        old=json.loads(path.read_text())
+        old_n=len(old.get('cells',[]))
+        new_n=len(output['cells'])
+        if old.get('metadata',{}).get('spatial_filter') == 'h3_polygon_intersects_municipality' and old.get('metadata',{}).get('municipalities') == sorted(geometries) and old_n>=100 and new_n<old_n*.5:
+            raise RuntimeError(f'Unexpected cell-count drop {old_n}->{new_n} (>50%); manual review needed')
+    with tempfile.NamedTemporaryFile('w',dir=path.parent,delete=False,encoding='utf-8') as tmp:
+        json.dump(output,tmp,indent=2);tmp.write('\n');tmp_path=Path(tmp.name)
+    os.replace(tmp_path,path)
+    print(f'Published {len(counts)} cells, {regional} registered hotspots to {path}')
+
+if __name__=='__main__':run()

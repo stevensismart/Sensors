@@ -1,0 +1,45 @@
+name: Refresh Helium registered hotspots
+on:
+  branches:
+      - main
+  workflow_dispatch:
+  schedule:
+    - cron: '21 9 * * *'
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: refresh-helium
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    environment:
+      name: github-pages
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Verify municipality boundaries
+        run: test -s data/municipalities.geojson
+      - name: Download complete registered-hotspot directory
+        run: python fetch_hotspots.py --delay 0.4
+      - name: Commit updated JSON only after successful run
+        run: |
+          if git diff --quiet -- data/hexes.json; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/hexes.json
+          git commit -m 'data: refresh Helium asserted hotspot registry'
+          git push
+      - name: Upload static website artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - name: Deploy refreshed website to GitHub Pages
+        uses: actions/deploy-pages@v4
