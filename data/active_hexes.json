@@ -1,0 +1,1082 @@
+{
+  "metadata": {
+    "source": "https://api-iot.heliumtools.org/v1/gateways/hex",
+    "retrieved_utc": "2026-10-21T15:01:34.309117+00:00",
+    "complete": true,
+    "spatial_filter": "h3_polygon_intersects_municipality",
+    "h3_resolution": 8,
+    "cells_queried": 153,
+    "municipalities": [
+      "Carlstadt",
+      "Cliffside Park",
+      "East Rutherford",
+      "Edgewater",
+      "Fairview",
+      "Lyndhurst",
+      "North Arlington",
+      "Passaic",
+      "Ridgefield",
+      "Rutherford",
+      "Wallington",
+      "Wood-Ridge"
+    ],
+    "meaning": "Third-party reported gateway activity; not measured RF coverage",
+    "total_unique_gateways": 575,
+    "total_unique_active_gateways": 51
+  },
+  "cells": [
+    {
+      "h3": "882a100811fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 5,
+      "municipalities": [
+        "Edgewater"
+      ]
+    },
+    {
+      "h3": "882a100813fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 8,
+      "municipalities": [
+        "Cliffside Park",
+        "Edgewater"
+      ]
+    },
+    {
+      "h3": "882a100815fffff",
+      "count": 4,
+      "active_count": 4,
+      "registered_count": 13,
+      "municipalities": [
+        "Cliffside Park",
+        "Ridgefield"
+      ]
+    },
+    {
+      "h3": "882a100817fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 15,
+      "municipalities": [
+        "Cliffside Park"
+      ]
+    },
+    {
+      "h3": "882a100819fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 7,
+      "municipalities": [
+        "Edgewater"
+      ]
+    },
+    {
+      "h3": "882a10081bfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 2,
+      "municipalities": [
+        "Edgewater"
+      ]
+    },
+    {
+      "h3": "882a100823fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 3,
+      "municipalities": [
+        "Ridgefield"
+      ]
+    },
+    {
+      "h3": "882a100827fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Ridgefield"
+      ]
+    },
+    {
+      "h3": "882a100831fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 4,
+      "municipalities": [
+        "Ridgefield"
+      ]
+    },
+    {
+      "h3": "882a100833fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 4,
+      "municipalities": [
+        "Fairview",
+        "Ridgefield"
+      ]
+    },
+    {
+      "h3": "882a100835fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 1,
+      "municipalities": [
+        "Ridgefield"
+      ]
+    },
+    {
+      "h3": "882a100837fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Ridgefield"
+      ]
+    },
+    {
+      "h3": "882a100839fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 8,
+      "municipalities": [
+        "Ridgefield"
+      ]
+    },
+    {
+      "h3": "882a10083bfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 8,
+      "municipalities": [
+        "Cliffside Park",
+        "Ridgefield"
+      ]
+    },
+    {
+      "h3": "882a10083dfffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 3,
+      "municipalities": [
+        "Ridgefield"
+      ]
+    },
+    {
+      "h3": "882a100853fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 2,
+      "municipalities": [
+        "Edgewater"
+      ]
+    },
+    {
+      "h3": "882a100857fffff",
+      "count": 2,
+      "active_count": 2,
+      "registered_count": 20,
+      "municipalities": [
+        "Edgewater"
+      ]
+    },
+    {
+      "h3": "882a10085bfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 3,
+      "municipalities": [
+        "Edgewater"
+      ]
+    },
+    {
+      "h3": "882a100885fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 1,
+      "municipalities": [
+        "Edgewater"
+      ]
+    },
+    {
+      "h3": "882a10088dfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Edgewater"
+      ]
+    },
+    {
+      "h3": "882a1008a9fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 6,
+      "municipalities": [
+        "Cliffside Park",
+        "Edgewater"
+      ]
+    },
+    {
+      "h3": "882a1008c5fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Edgewater"
+      ]
+    },
+    {
+      "h3": "882a1008c7fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 3,
+      "municipalities": [
+        "Edgewater"
+      ]
+    },
+    {
+      "h3": "882a1008e1fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 14,
+      "municipalities": [
+        "Cliffside Park",
+        "Edgewater",
+        "Fairview"
+      ]
+    },
+    {
+      "h3": "882a1008e3fffff",
+      "count": 2,
+      "active_count": 2,
+      "registered_count": 14,
+      "municipalities": [
+        "Cliffside Park",
+        "Edgewater"
+      ]
+    },
+    {
+      "h3": "882a1008e5fffff",
+      "count": 2,
+      "active_count": 2,
+      "registered_count": 7,
+      "municipalities": [
+        "Fairview"
+      ]
+    },
+    {
+      "h3": "882a1008e7fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 14,
+      "municipalities": [
+        "Cliffside Park",
+        "Edgewater",
+        "Fairview"
+      ]
+    },
+    {
+      "h3": "882a1008e9fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 8,
+      "municipalities": [
+        "Cliffside Park",
+        "Edgewater"
+      ]
+    },
+    {
+      "h3": "882a1008edfffff",
+      "count": 2,
+      "active_count": 2,
+      "registered_count": 13,
+      "municipalities": [
+        "Cliffside Park",
+        "Fairview",
+        "Ridgefield"
+      ]
+    },
+    {
+      "h3": "882a100921fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 6,
+      "municipalities": [
+        "Wood-Ridge"
+      ]
+    },
+    {
+      "h3": "882a100923fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 5,
+      "municipalities": [
+        "Wallington",
+        "Wood-Ridge"
+      ]
+    },
+    {
+      "h3": "882a100925fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 10,
+      "municipalities": [
+        "Passaic"
+      ]
+    },
+    {
+      "h3": "882a100927fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 5,
+      "municipalities": [
+        "Passaic",
+        "Wallington"
+      ]
+    },
+    {
+      "h3": "882a10092bfffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 11,
+      "municipalities": [
+        "Wood-Ridge"
+      ]
+    },
+    {
+      "h3": "882a100931fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 3,
+      "municipalities": [
+        "Wood-Ridge"
+      ]
+    },
+    {
+      "h3": "882a100933fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 2,
+      "municipalities": [
+        "Carlstadt",
+        "Wood-Ridge"
+      ]
+    },
+    {
+      "h3": "882a100935fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 8,
+      "municipalities": [
+        "Wallington",
+        "Wood-Ridge"
+      ]
+    },
+    {
+      "h3": "882a100937fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 6,
+      "municipalities": [
+        "Carlstadt",
+        "Wood-Ridge"
+      ]
+    },
+    {
+      "h3": "882a10093bfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 2,
+      "municipalities": [
+        "Wood-Ridge"
+      ]
+    },
+    {
+      "h3": "882a10093dfffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 5,
+      "municipalities": [
+        "Wood-Ridge"
+      ]
+    },
+    {
+      "h3": "882a100981fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 1,
+      "municipalities": [
+        "Carlstadt"
+      ]
+    },
+    {
+      "h3": "882a1009a3fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "East Rutherford"
+      ]
+    },
+    {
+      "h3": "882a1009abfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Carlstadt",
+        "East Rutherford"
+      ]
+    },
+    {
+      "h3": "882a1009b1fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 5,
+      "municipalities": [
+        "East Rutherford"
+      ]
+    },
+    {
+      "h3": "882a1009bdfffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 1,
+      "municipalities": [
+        "East Rutherford"
+      ]
+    },
+    {
+      "h3": "882a1009c3fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Carlstadt",
+        "Ridgefield"
+      ]
+    },
+    {
+      "h3": "882a1009c5fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 2,
+      "municipalities": [
+        "Carlstadt"
+      ]
+    },
+    {
+      "h3": "882a1009cbfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Ridgefield"
+      ]
+    },
+    {
+      "h3": "882a1009d1fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Ridgefield"
+      ]
+    },
+    {
+      "h3": "882a1009d9fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Fairview",
+        "Ridgefield"
+      ]
+    },
+    {
+      "h3": "882a1009dbfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 4,
+      "municipalities": [
+        "Fairview"
+      ]
+    },
+    {
+      "h3": "882a1009e1fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Carlstadt"
+      ]
+    },
+    {
+      "h3": "882a1009e3fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Carlstadt"
+      ]
+    },
+    {
+      "h3": "882a100aa5fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Edgewater"
+      ]
+    },
+    {
+      "h3": "882a1044d3fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 5,
+      "municipalities": [
+        "North Arlington"
+      ]
+    },
+    {
+      "h3": "882a1044dbfffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 7,
+      "municipalities": [
+        "North Arlington"
+      ]
+    },
+    {
+      "h3": "882a104611fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 7,
+      "municipalities": [
+        "Passaic"
+      ]
+    },
+    {
+      "h3": "882a104613fffff",
+      "count": 2,
+      "active_count": 2,
+      "registered_count": 7,
+      "municipalities": [
+        "Passaic",
+        "Wallington"
+      ]
+    },
+    {
+      "h3": "882a104615fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 13,
+      "municipalities": [
+        "Passaic"
+      ]
+    },
+    {
+      "h3": "882a104617fffff",
+      "count": 2,
+      "active_count": 2,
+      "registered_count": 7,
+      "municipalities": [
+        "Passaic"
+      ]
+    },
+    {
+      "h3": "882a104619fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 6,
+      "municipalities": [
+        "Passaic"
+      ]
+    },
+    {
+      "h3": "882a10461bfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 4,
+      "municipalities": [
+        "Passaic"
+      ]
+    },
+    {
+      "h3": "882a10461dfffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 8,
+      "municipalities": [
+        "Passaic"
+      ]
+    },
+    {
+      "h3": "882a10463bfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 5,
+      "municipalities": [
+        "Passaic"
+      ]
+    },
+    {
+      "h3": "882a104681fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Rutherford"
+      ]
+    },
+    {
+      "h3": "882a104683fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 3,
+      "municipalities": [
+        "Lyndhurst",
+        "Rutherford"
+      ]
+    },
+    {
+      "h3": "882a104689fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 6,
+      "municipalities": [
+        "Passaic",
+        "Rutherford"
+      ]
+    },
+    {
+      "h3": "882a10468bfffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 5,
+      "municipalities": [
+        "Rutherford"
+      ]
+    },
+    {
+      "h3": "882a10468dfffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 3,
+      "municipalities": [
+        "Passaic",
+        "Rutherford"
+      ]
+    },
+    {
+      "h3": "882a104691fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 6,
+      "municipalities": [
+        "Lyndhurst",
+        "Rutherford"
+      ]
+    },
+    {
+      "h3": "882a104693fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 2,
+      "municipalities": [
+        "Lyndhurst"
+      ]
+    },
+    {
+      "h3": "882a104695fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 3,
+      "municipalities": [
+        "Lyndhurst"
+      ]
+    },
+    {
+      "h3": "882a104697fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 6,
+      "municipalities": [
+        "Lyndhurst"
+      ]
+    },
+    {
+      "h3": "882a104699fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 4,
+      "municipalities": [
+        "East Rutherford",
+        "Rutherford"
+      ]
+    },
+    {
+      "h3": "882a10469bfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Lyndhurst",
+        "Rutherford"
+      ]
+    },
+    {
+      "h3": "882a10469dfffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 9,
+      "municipalities": [
+        "Lyndhurst",
+        "Rutherford"
+      ]
+    },
+    {
+      "h3": "882a1046b1fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 3,
+      "municipalities": [
+        "Lyndhurst"
+      ]
+    },
+    {
+      "h3": "882a1046b3fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 3,
+      "municipalities": [
+        "Lyndhurst",
+        "North Arlington"
+      ]
+    },
+    {
+      "h3": "882a1046b9fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 4,
+      "municipalities": [
+        "Lyndhurst"
+      ]
+    },
+    {
+      "h3": "882a1046bbfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 5,
+      "municipalities": [
+        "Lyndhurst"
+      ]
+    },
+    {
+      "h3": "882a1046c1fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 5,
+      "municipalities": [
+        "East Rutherford",
+        "Wallington"
+      ]
+    },
+    {
+      "h3": "882a1046c3fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 4,
+      "municipalities": [
+        "East Rutherford",
+        "Rutherford",
+        "Wallington"
+      ]
+    },
+    {
+      "h3": "882a1046c5fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 6,
+      "municipalities": [
+        "East Rutherford",
+        "Passaic",
+        "Wallington"
+      ]
+    },
+    {
+      "h3": "882a1046c7fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 6,
+      "municipalities": [
+        "East Rutherford",
+        "Passaic",
+        "Rutherford"
+      ]
+    },
+    {
+      "h3": "882a1046c9fffff",
+      "count": 3,
+      "active_count": 3,
+      "registered_count": 10,
+      "municipalities": [
+        "Passaic",
+        "Wallington"
+      ]
+    },
+    {
+      "h3": "882a1046cbfffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 5,
+      "municipalities": [
+        "Carlstadt",
+        "Wallington",
+        "Wood-Ridge"
+      ]
+    },
+    {
+      "h3": "882a1046cdfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 6,
+      "municipalities": [
+        "Passaic",
+        "Wallington"
+      ]
+    },
+    {
+      "h3": "882a1046d1fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 4,
+      "municipalities": [
+        "East Rutherford",
+        "Rutherford"
+      ]
+    },
+    {
+      "h3": "882a1046d3fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 2,
+      "municipalities": [
+        "East Rutherford",
+        "Rutherford"
+      ]
+    },
+    {
+      "h3": "882a1046d5fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 10,
+      "municipalities": [
+        "East Rutherford",
+        "Rutherford"
+      ]
+    },
+    {
+      "h3": "882a1046d7fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 7,
+      "municipalities": [
+        "East Rutherford",
+        "Rutherford"
+      ]
+    },
+    {
+      "h3": "882a1046d9fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 7,
+      "municipalities": [
+        "Carlstadt",
+        "East Rutherford"
+      ]
+    },
+    {
+      "h3": "882a1046dbfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 2,
+      "municipalities": [
+        "Carlstadt",
+        "East Rutherford"
+      ]
+    },
+    {
+      "h3": "882a1046ddfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 13,
+      "municipalities": [
+        "Carlstadt",
+        "East Rutherford",
+        "Wallington"
+      ]
+    },
+    {
+      "h3": "882a1046e1fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 2,
+      "municipalities": [
+        "Passaic"
+      ]
+    },
+    {
+      "h3": "882a1046e3fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 2,
+      "municipalities": [
+        "Passaic"
+      ]
+    },
+    {
+      "h3": "882a1046e9fffff",
+      "count": 2,
+      "active_count": 2,
+      "registered_count": 12,
+      "municipalities": [
+        "Passaic"
+      ]
+    },
+    {
+      "h3": "882a1046ebfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 4,
+      "municipalities": [
+        "Passaic"
+      ]
+    },
+    {
+      "h3": "882a1046edfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 8,
+      "municipalities": [
+        "Passaic"
+      ]
+    },
+    {
+      "h3": "882a107319fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 3,
+      "municipalities": [
+        "Lyndhurst"
+      ]
+    },
+    {
+      "h3": "882a107329fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 3,
+      "municipalities": [
+        "North Arlington"
+      ]
+    },
+    {
+      "h3": "882a10732dfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 9,
+      "municipalities": [
+        "North Arlington"
+      ]
+    },
+    {
+      "h3": "882a107347fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Lyndhurst"
+      ]
+    },
+    {
+      "h3": "882a10734dfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 4,
+      "municipalities": [
+        "Lyndhurst",
+        "Rutherford"
+      ]
+    },
+    {
+      "h3": "882a10735dfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 8,
+      "municipalities": [
+        "East Rutherford",
+        "Lyndhurst",
+        "Rutherford"
+      ]
+    },
+    {
+      "h3": "882a107361fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 4,
+      "municipalities": [
+        "North Arlington"
+      ]
+    },
+    {
+      "h3": "882a107363fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "North Arlington"
+      ]
+    },
+    {
+      "h3": "882a107365fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 2,
+      "municipalities": [
+        "North Arlington"
+      ]
+    },
+    {
+      "h3": "882a107367fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 3,
+      "municipalities": [
+        "North Arlington"
+      ]
+    },
+    {
+      "h3": "882a107369fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 2,
+      "municipalities": [
+        "Lyndhurst",
+        "North Arlington"
+      ]
+    },
+    {
+      "h3": "882a10736dfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 12,
+      "municipalities": [
+        "Lyndhurst",
+        "North Arlington"
+      ]
+    }
+  ]
+}
