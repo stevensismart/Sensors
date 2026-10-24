@@ -1,7 +1,7 @@
 {
   "metadata": {
     "source": "https://api-iot.heliumtools.org/v1/gateways/hex",
-    "retrieved_utc": "2026-10-23T14:18:49.316796+00:00",
+    "retrieved_utc": "2026-10-24T13:24:44.988987+00:00",
     "complete": true,
     "spatial_filter": "h3_polygon_intersects_municipality",
     "h3_resolution": 8,
