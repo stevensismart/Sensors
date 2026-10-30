@@ -4,8 +4,20 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{font-family:system-ui,-apple-system,sans-serif;color:#17243a}*{box-sizing:border-box}body{margin:0}header{background:#15243a;color:white;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px}header h1{font-size:19px;margin:0}header small{color:#c7d6e8}.layout{display:grid;grid-template-columns:310px 1fr;height:calc(100vh - 65px)}aside{padding:20px;background:#f7f9fc;overflow:auto;border-right:1px solid #dbe3ed}#map{height:100%;width:100%}label{display:block;font-size:13px;font-weight:700;margin:17px 0 7px}select,button{width:100%;border:1px solid #bac7d7;border-radius:8px;padding:10px;background:white;font:inherit}button{cursor:pointer;margin-top:10px}button:hover{background:#eaf0f7}.stat{background:white;border:1px solid #e0e6ee;padding:12px;border-radius:9px;margin-top:12px}.stat strong{font-size:23px;display:block}.stat span{font-size:12px;color:#53657d}.hint{font-size:12px;line-height:1.6;color:#526177}.error{color:#a02b2b}.legend{background:white;padding:9px;border-radius:7px;box-shadow:0 1px 8px #0002;font-size:12px}.swatch{display:inline-block;width:14px;height:12px;background:#ed5656;border:1px solid #a92727;vertical-align:middle;margin-right:6px}@media(max-width:700px){.layout{grid-template-columns:1fr;grid-template-rows:auto minmax(420px,1fr);height:auto}aside{padding:12px}#map{height:65vh}header{padding:12px}}
+
+/* Historical hydrology field sites */
+.legacy-section{margin-top:20px;border-top:1px solid #dbe3ed;padding-top:14px}
+.legacy-section h3{font-size:15px;margin:0 0 12px}
+.legacy-inline{display:flex;align-items:center;gap:8px;font-weight:600}
+.legacy-inline input{width:auto}
+.legacy-site-list{max-height:260px;overflow-y:auto;margin-top:10px}
+.legacy-site-item{font-size:12px;text-align:left;padding:9px 10px;margin:5px 0;border-left:4px solid #3676b5}
+.legacy-site-item[data-deployed="true"]{border-left-color:#198754}
+.legacy-key{display:flex;gap:15px;flex-wrap:wrap;font-size:12px;margin-top:10px}
+.legacy-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;background:#3676b5}
+.legacy-dot.deployed{background:#198754}
 </style></head><body>
-<header><div><h1>Helium IoT · New Jersey</h1><small>Gateway activity (third-party report) · not verified RF coverage</small></div><small>No API key · No payment card</small></header>
+<header><div><h1>Helium IoT · New Jersey</h1></div></header>
 <div class="layout"><aside>
 <label for="town">Municipality</label><select id="town"><option value="">All municipalities</option></select>
 <label for="base">Basemap</label><select id="base"><option value="osm">OpenStreetMap Standard</option></select>
@@ -13,6 +25,21 @@
 <label for="minCount">Minimum registrations per cell: <strong id="minCountValue">1</strong></label><input id="minCount" type="range" min="1" max="20" step="1" value="1" style="width:100%">
 <label><input id="showHex" type="checkbox" checked> Show H3 hotspot hexagons</label>
 <label><input id="showBounds" type="checkbox" checked> Show municipality boundaries</label>
+
+<section class="legacy-section" aria-label="Historical hydrological sensor sites">
+<h3>Historical hydrological locations</h3>
+<label class="legacy-inline"><input id="showLegacy" type="checkbox"> Show historical candidate / deployed pins</label>
+<label for="legacyTown">Historical municipality</label>
+<select id="legacyTown"><option value="">All historical municipalities</option></select>
+<label for="legacyStatus">Historical site status</label>
+<select id="legacyStatus"><option value="">All sites</option><option value="candidate">Candidate (unverified)</option><option value="reported_deployed">Reported deployed (unverified)</option></select>
+<div class="legacy-key"><span><i class="legacy-dot"></i>Candidate</span><span><i class="legacy-dot deployed"></i>Reported deployed</span></div>
+<div class="stat"><strong id="legacyCount">0</strong><span>Historical sites matching filters</span></div>
+<button id="zoomLegacy" type="button">Zoom to historical sites</button>
+<div id="legacyList" class="legacy-site-list"></div>
+<p class="hint">Imported from the earlier lab map (Robert).</p>
+</section>
+
 <button id="reset">Zoom to study area</button>
 <div class="stat"><strong id="hexCount">—</strong><span>Unique H3 cells in selected area</span></div>
 <div class="stat"><strong id="hotspotCount">—</strong><span id="countCaption">Reported active gateways in selected area</span></div>
@@ -55,4 +82,387 @@ document.getElementById('reset').addEventListener('click',()=>{townEl.value='';i
 async function loadJSON(url){const res=await fetch(url,{cache:'no-store'});if(!res.ok)throw Error(`${url}: HTTP ${res.status}`);return res.json();}
 (async()=>{let messages=[];try{const geo=await loadJSON('./data/municipalities.geojson');boundaries=geo.features||[];if(!boundaries.length)throw Error('Empty municipality boundary file');for(const name of [...new Set(boundaries.map(normalizeName))].sort())townEl.add(new Option(name,name));boundaryLayer.addData({type:'FeatureCollection',features:boundaries});messages.push(`${boundaries.length} municipality boundaries loaded.`);if(boundaries.length){const b=boundaryLayer.getBounds();if(b.isValid())map.fitBounds(b.pad(.06));}}catch(e){messages.push('Municipality boundaries missing. Run the data preparation script.');console.warn(e);}try{const data=await loadJSON('./data/hexes.json');assertMeta=data.metadata||{};assertions=(Array.isArray(data)?data:data.cells||[]).filter(c=>typeof c.h3==='string'&&h3.isValidCell(c.h3));messages.push(`${assertions.length} municipality-intersecting registered-hotspot H3 cells loaded.`);if(assertMeta.spatial_filter!=='h3_polygon_intersects_municipality')messages.push('WARNING: legacy dataset; regenerate with the new downloader.');if(assertMeta.complete!==true)messages.push('WARNING: source download not confirmed complete.');}catch(e){messages.push('Hexagon data missing. Run the Helium downloader.');console.warn(e);}try{const ad=await loadJSON('./data/active_hexes.json');activeMeta=ad.metadata||{};activeCells=(ad.cells||[]).filter(c=>typeof c.h3==='string'&&h3.isValidCell(c.h3)&&Array.isArray(c.municipalities));messages.push(`${activeCells.length} active-gateway dataset cells loaded.`);}catch(e){console.info('No active-gateway dataset yet',e);}if(!activeCells.length){datasetEl.options[0].disabled=true;datasetEl.options[0].text='Reported active gateways (not downloaded)';datasetEl.value='assertions';}
 statusEl.textContent=messages.join(' ');if(!boundaries.length||!assertions.length)statusEl.classList.add('error');switchDataset();})();
+
+/* Historical sensor sites, embedded directly so only index.html is needed.
+   Names and locations originate from the former index (1) (1).html. */
+const LEGACY_SITES = [
+  {
+    "name": "155 Werimus Road",
+    "town": "Woodcliff Lake",
+    "lat": 41.02183333,
+    "lng": -74.06633333,
+    "status": "candidate"
+  },
+  {
+    "name": "Haring Dr Walkpath",
+    "town": "Old Tappan",
+    "lat": 41.01427778,
+    "lng": -73.97477778,
+    "status": "candidate"
+  },
+  {
+    "name": "Willet St",
+    "town": "Park Ridge",
+    "lat": 41.03513889,
+    "lng": -74.03902778,
+    "status": "candidate"
+  },
+  {
+    "name": "130 Pascack Road",
+    "town": "Park Ridge",
+    "lat": 41.03675,
+    "lng": -74.04116667,
+    "status": "candidate"
+  },
+  {
+    "name": "Bear Brook (Already Deployed)",
+    "town": "Park Ridge",
+    "lat": 41.02891667,
+    "lng": -74.04827778,
+    "status": "reported_deployed"
+  },
+  {
+    "name": "Pascack Brook (off Old Hook rd)",
+    "town": "Emerson",
+    "lat": 40.9805,
+    "lng": -74.00247222,
+    "status": "candidate"
+  },
+  {
+    "name": "1000 Hillsdale Avenue",
+    "town": "Hillsdale",
+    "lat": 41.00588889,
+    "lng": -74.06502778,
+    "status": "candidate"
+  },
+  {
+    "name": "509 Hillsdale Ave",
+    "town": "Hillsdale",
+    "lat": 41.00263889,
+    "lng": -74.0455,
+    "status": "candidate"
+  },
+  {
+    "name": "100 St Nicholas Ave",
+    "town": "Hillsdale",
+    "lat": 41.01247222,
+    "lng": -74.03127778,
+    "status": "candidate"
+  },
+  {
+    "name": "70 Queen Ct (Already Deployed)",
+    "town": "Hillsdale",
+    "lat": 41.00766667,
+    "lng": -74.04736111,
+    "status": "reported_deployed"
+  },
+  {
+    "name": "95 Heritage Ct",
+    "town": "Woodcliff Lake",
+    "lat": 41.01947222,
+    "lng": -74.05458333,
+    "status": "candidate"
+  },
+  {
+    "name": "3 Brookview Dr",
+    "town": "Woodcliff Lake",
+    "lat": 41.01202778,
+    "lng": -74.06313889,
+    "status": "candidate"
+  },
+  {
+    "name": "off of 160 Highland Ave",
+    "town": "Emerson",
+    "lat": 40.97736111,
+    "lng": -74.01711111,
+    "status": "candidate"
+  },
+  {
+    "name": "60 Central Ave",
+    "town": "Old Tappan",
+    "lat": 41.00988889,
+    "lng": -73.97336111,
+    "status": "candidate"
+  },
+  {
+    "name": "Rivervale Rd (near 354)",
+    "town": "River Vale",
+    "lat": 41.00441667,
+    "lng": -74.01,
+    "status": "candidate"
+  },
+  {
+    "name": "634 Orangeburgh Rd",
+    "town": "River Vale",
+    "lat": 41.03155556,
+    "lng": -74.00575,
+    "status": "candidate"
+  },
+  {
+    "name": "605 Red Oak Dr",
+    "town": "River Vale",
+    "lat": 41.01227778,
+    "lng": -74.00847222,
+    "status": "candidate"
+  },
+  {
+    "name": "510 Prospect Ave",
+    "town": "River Vale",
+    "lat": 41.02152778,
+    "lng": -74.01930556,
+    "status": "candidate"
+  },
+  {
+    "name": "460 Cedar Lane",
+    "town": "River Vale",
+    "lat": 41.00838889,
+    "lng": -74.02063889,
+    "status": "candidate"
+  },
+  {
+    "name": "Westwood Ave Bridge (Has USGS gauge here)",
+    "town": "River Vale",
+    "lat": 40.99927778,
+    "lng": -73.98969444,
+    "status": "candidate"
+  },
+  {
+    "name": "190 Demarest Ave",
+    "town": "River Vale",
+    "lat": 40.99883333,
+    "lng": -74.02061111,
+    "status": "candidate"
+  },
+  {
+    "name": "81 Magnolia Ave",
+    "town": "Montvale",
+    "lat": 41.05294444,
+    "lng": -74.03497222,
+    "status": "candidate"
+  },
+  {
+    "name": "5 Glen Lane",
+    "town": "Montvale",
+    "lat": 41.04447222,
+    "lng": -74.02872222,
+    "status": "candidate"
+  },
+  {
+    "name": "25 W Grand Ave",
+    "town": "Montvale",
+    "lat": 41.04008333,
+    "lng": -74.03219444,
+    "status": "candidate"
+  },
+  {
+    "name": "K-Mart (Already Deployed)",
+    "town": "Westwood",
+    "lat": 40.9965,
+    "lng": -74.04025,
+    "status": "reported_deployed"
+  },
+  {
+    "name": "Brookside Park (Already Deployed)",
+    "town": "Hillsdale",
+    "lat": 40.99861111,
+    "lng": -74.03002778,
+    "status": "reported_deployed"
+  },
+  {
+    "name": "Overbrook Park (Already Deployed)",
+    "town": "Westwood",
+    "lat": 40.99486111,
+    "lng": -74.02755556,
+    "status": "reported_deployed"
+  },
+  {
+    "name": "Musquapsink Brook @ Meadowbrook Field (Already Deployed)",
+    "town": "Westwood",
+    "lat": 40.9865,
+    "lng": -74.02802778,
+    "status": "reported_deployed"
+  },
+  {
+    "name": "24 Fern St",
+    "town": "Westwood",
+    "lat": 40.98727778,
+    "lng": -74.02263889,
+    "status": "candidate"
+  },
+  {
+    "name": "72 Goodwin Terrace",
+    "town": "Westwood",
+    "lat": 40.98636111,
+    "lng": -74.03377778,
+    "status": "candidate"
+  },
+  {
+    "name": "Harrington Ave near Vietnam Vet Bridge",
+    "town": "Westwood",
+    "lat": 40.99288889,
+    "lng": -74.02127778,
+    "status": "candidate"
+  },
+  {
+    "name": "Pascack Brook County Park",
+    "town": "Westwood",
+    "lat": 40.99,
+    "lng": -74.00766667,
+    "status": "candidate"
+  },
+  {
+    "name": "Sherry Field",
+    "town": "Westwood",
+    "lat": 40.97611111,
+    "lng": -74.04827778,
+    "status": "candidate"
+  },
+  {
+    "name": "Westwood Regional High School",
+    "town": "Washington Twp",
+    "lat": 40.97716667,
+    "lng": -74.06344444,
+    "status": "candidate"
+  },
+  {
+    "name": "285 Pascack Rd. Suite #8",
+    "town": "Washington Twp",
+    "lat": 40.98386111,
+    "lng": -74.06186111,
+    "status": "candidate"
+  },
+  {
+    "name": "51 Lexington Ct (in Washington Commons)",
+    "town": "Washington Twp",
+    "lat": 40.99305556,
+    "lng": -74.05972222,
+    "status": "candidate"
+  },
+  {
+    "name": "Van Buskirk Park",
+    "town": "Oradell",
+    "lat": 40.94927778,
+    "lng": -74.02608333,
+    "status": "candidate"
+  },
+  {
+    "name": "842 Schirra Drive",
+    "town": "Oradell",
+    "lat": 40.96725,
+    "lng": -74.03736111,
+    "status": "candidate"
+  },
+  {
+    "name": "Skating pond @ Memorial Park (Prospect Ave)",
+    "town": "Oradell",
+    "lat": 40.95577778,
+    "lng": -74.03819444,
+    "status": "candidate"
+  },
+  {
+    "name": "Van Buskirk Park (contact county park department)",
+    "town": "Oradell",
+    "lat": 40.94808333,
+    "lng": -74.02688889,
+    "status": "candidate"
+  },
+  {
+    "name": "Poplar Road Wildlife Sanctuary",
+    "town": "River Vale",
+    "lat": 41.02052778,
+    "lng": -74.00327778,
+    "status": "candidate"
+  },
+  {
+    "name": "Stanaland Park",
+    "town": "Old Tappan",
+    "lat": 41.01686111,
+    "lng": -73.977,
+    "status": "candidate"
+  },
+  {
+    "name": "131 Main St (Emerson Junior Senior High School)",
+    "town": "Emerson",
+    "lat": 40.97394444,
+    "lng": -74.01502778,
+    "status": "candidate"
+  },
+  {
+    "name": "Hillsdale Public Works (Already Deployed)",
+    "town": "Hillsdale",
+    "lat": 40.99988889,
+    "lng": -74.04008333,
+    "status": "reported_deployed"
+  },
+  {
+    "name": "31 Nugent Pl (Already Deployed)",
+    "town": "Westwood",
+    "lat": 40.99897222,
+    "lng": -74.04041667,
+    "status": "reported_deployed"
+  },
+  {
+    "name": "Wood Dale County Park",
+    "town": "Woodcliff Lake",
+    "lat": 41.02025,
+    "lng": -74.03055556,
+    "status": "candidate"
+  }
+];
+const legacyLayer = L.layerGroup();
+const legacyTown = document.getElementById('legacyTown');
+const legacyStatus = document.getElementById('legacyStatus');
+const legacyToggle = document.getElementById('showLegacy');
+const legacyList = document.getElementById('legacyList');
+for (const name of [...new Set(LEGACY_SITES.map(s => s.town))].sort()) {
+  legacyTown.add(new Option(name, name));
+}
+function legacySelection() {
+  return LEGACY_SITES.filter(s =>
+    (!legacyTown.value || s.town === legacyTown.value) &&
+    (!legacyStatus.value || s.status === legacyStatus.value));
+}
+function renderLegacy() {
+  legacyLayer.clearLayers();
+  legacyList.replaceChildren();
+  const selected = legacySelection();
+  document.getElementById('legacyCount').textContent = selected.length.toLocaleString();
+  if (legacyToggle.checked) legacyLayer.addTo(map);
+  else map.removeLayer(legacyLayer);
+  for (const site of selected) {
+    const deployed = site.status === 'reported_deployed';
+    const desc = deployed ? 'Historically reported deployed (unverified)' : 'Historical candidate (unverified)';
+    const marker = L.circleMarker([site.lat, site.lng], {
+      radius:7, color:'#ffffff', weight:2,
+      fillColor:deployed ? '#198754' : '#3676b5', fillOpacity:1
+    });
+    const popup = document.createElement('div');
+    const heading = document.createElement('strong'); heading.textContent=site.name;
+    const body = document.createElement('div'); body.textContent=site.town+' · '+desc;
+    const foot = document.createElement('small'); foot.textContent='Historical lab inventory; connectivity unverified';
+    popup.append(heading,body,foot);
+    marker.bindPopup(popup).addTo(legacyLayer);
+    const button = document.createElement('button');
+    button.type='button'; button.className='legacy-site-item';
+    button.dataset.deployed = String(deployed);
+    const title = document.createElement('strong'); title.textContent = site.name;
+    const subtitle = document.createElement('div'); subtitle.textContent = site.town+' · '+desc;
+    button.append(title,subtitle);
+    button.addEventListener('click',()=>{
+      legacyToggle.checked = true; legacyLayer.addTo(map);
+      map.setView([site.lat,site.lng],16); marker.openPopup();
+    });
+    legacyList.appendChild(button);
+  }
+}
+legacyToggle.addEventListener('change',renderLegacy);
+legacyTown.addEventListener('change',renderLegacy);
+legacyStatus.addEventListener('change',renderLegacy);
+document.getElementById('zoomLegacy').addEventListener('click',()=>{
+  const sites = legacySelection(); if (!sites.length) return;
+  legacyToggle.checked = true; renderLegacy();
+  map.fitBounds(L.latLngBounds(sites.map(s=>[s.lat,s.lng])).pad(.12),{maxZoom:15});
+});
+renderLegacy();
+
 </script></body></html>

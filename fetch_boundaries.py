@@ -1,71 +1,80 @@
 #!/usr/bin/env python3
-"""Download boundaries for 12 NJ municipalities from Census COUSUB data.
+"""Generate the project municipality boundaries from 2024 NJ Census COUSUB shapefiles.
 
-NJ county subdivisions correspond to municipalities (boroughs, cities, townships).
-Requires: requests, pyshp (shapefile).
+To add another municipality, add its exact Census NAME and county FIPS below.
+For Washington Township (Bergen), the Census NAME is 'Washington'; we retain
+'Washington Twp' as the display name matching the legacy pin inventory.
 """
 import io
 import json
 from pathlib import Path
 import zipfile
-
 import requests
 import shapefile
 
-COUNTIES = {
-    'Carlstadt': '003',
-    'Cliffside Park': '003',
-    'East Rutherford': '003',
-    'Edgewater': '003',
-    'Fairview': '003',
-    'Lyndhurst': '003',
-    'North Arlington': '003',
-    'Passaic': '031',
-    'Ridgefield': '003',
-    'Rutherford': '003',
-    'Wallington': '003',
-    'Wood-Ridge': '003',
+# Keys = names displayed in app; values = (Census NAME, county FIPS).
+MUNICIPALITIES = {
+    'Carlstadt': ('Carlstadt', '003'),
+    'Cliffside Park': ('Cliffside Park', '003'),
+    'East Rutherford': ('East Rutherford', '003'),
+    'Edgewater': ('Edgewater', '003'),
+    'Fairview': ('Fairview', '003'),
+    'Lyndhurst': ('Lyndhurst', '003'),
+    'North Arlington': ('North Arlington', '003'),
+    'Passaic': ('Passaic', '031'),
+    'Ridgefield': ('Ridgefield', '003'),
+    'Rutherford': ('Rutherford', '003'),
+    'Wallington': ('Wallington', '003'),
+    'Wood-Ridge': ('Wood-Ridge', '003'),
+    # Legacy sites: 10 more municipalities
+    'Emerson': ('Emerson', '003'),
+    'Hillsdale': ('Hillsdale', '003'),
+    'Montvale': ('Montvale', '003'),
+    'Old Tappan': ('Old Tappan', '003'),
+    'Oradell': ('Oradell', '003'),
+    'Park Ridge': ('Park Ridge', '003'),
+    'River Vale': ('River Vale', '003'),
+    'Washington Twp': ('Washington', '003'),
+    'Westwood': ('Westwood', '003'),
+    'Woodcliff Lake': ('Woodcliff Lake', '003'),
 }
-SOURCE = 'https://www2.census.gov/geo/tiger/GENZ2024/shp/cb_2024_34_cousub_500k.zip'
-
+SOURCE='https://www2.census.gov/geo/tiger/GENZ2024/shp/cb_2024_34_cousub_500k.zip'
 
 def main():
-    response = requests.get(SOURCE, timeout=90)
+    wanted={(census,county):label for label,(census,county) in MUNICIPALITIES.items()}
+    if len(wanted)!=len(MUNICIPALITIES):
+        raise RuntimeError('Duplicate Census municipality mapping')
+    response=requests.get(SOURCE,timeout=120)
     response.raise_for_status()
     with zipfile.ZipFile(io.BytesIO(response.content)) as zf:
-        members = {Path(n).suffix.lower(): n for n in zf.namelist()
-                   if Path(n).suffix.lower() in ('.shp', '.shx', '.dbf')}
-        reader = shapefile.Reader(
+        members={Path(name).suffix.lower():name for name in zf.namelist()
+                 if Path(name).suffix.lower() in ('.shp','.shx','.dbf')}
+        reader=shapefile.Reader(
             shp=io.BytesIO(zf.read(members['.shp'])),
             shx=io.BytesIO(zf.read(members['.shx'])),
             dbf=io.BytesIO(zf.read(members['.dbf'])))
-        found = {}
+        found={}
         for record in reader.iterShapeRecords():
-            props = record.record.as_dict()
-            name = props.get('NAME')
-            county = props.get('COUNTYFP')
-            if name not in COUNTIES or county != COUNTIES[name]:
-                continue
-            if name in found:
-                raise RuntimeError(f'Duplicate municipality: {name} (GEOID {props.get("GEOID")})')
-            found[name] = {
-                'type': 'Feature',
-                'properties': {'name': name, 'county_fips': county,
-                               'geoid': props.get('GEOID')},
-                'geometry': record.shape.__geo_interface__,
+            p=record.record.as_dict()
+            census=p.get('NAME');county=p.get('COUNTYFP')
+            label=wanted.get((census,county))
+            if label is None: continue
+            if label in found:
+                raise RuntimeError(f'Duplicate record for {label}')
+            found[label]={
+                'type':'Feature',
+                'properties':{'name':label,'census_name':census,
+                              'county_fips':county,'geoid':p.get('GEOID')},
+                'geometry':record.shape.__geo_interface__,
             }
-    missing = sorted(set(COUNTIES) - set(found))
+    missing=sorted(set(MUNICIPALITIES)-set(found))
     if missing:
-        raise RuntimeError(f'Missing boundaries: {missing}. Found: {sorted(found)}')
-    output = Path(__file__).resolve().parent / 'data' / 'municipalities.geojson'
-    output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps({'type': 'FeatureCollection',
-                                  'features': [found[name] for name in sorted(found)]}) + '\n',
-                      encoding='utf-8')
-    print(f'Wrote {output} with {len(found)} municipalities')
-    for name in sorted(found):
-        print(f'  {name}: {found[name]["properties"]["geoid"]}')
+        raise RuntimeError(f'Missing municipalities: {missing}; found: {sorted(found)}')
+    path=Path(__file__).resolve().parent/'data'/'municipalities.geojson'
+    path.parent.mkdir(parents=True,exist_ok=True)
+    data={'type':'FeatureCollection','features':[found[n] for n in sorted(found)]}
+    path.write_text(json.dumps(data,separators=(',',':'))+'\n',encoding='utf-8')
+    print(f'Wrote {len(found)} municipalities to {path}')
+    for n in sorted(found):print(f'  {n} ({found[n]["properties"]["geoid"]})')
 
-
-if __name__ == '__main__':
-    main()
+if __name__=='__main__':main()
