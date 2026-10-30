@@ -1,28 +1,38 @@
 {
   "metadata": {
     "source": "https://api-iot.heliumtools.org/v1/gateways/hex",
-    "retrieved_utc": "2026-10-30T16:01:20.657128+00:00",
+    "retrieved_utc": "2026-10-30T22:28:12.432976+00:00",
     "complete": true,
     "spatial_filter": "h3_polygon_intersects_municipality",
     "h3_resolution": 8,
-    "cells_queried": 153,
+    "cells_queried": 296,
     "municipalities": [
       "Carlstadt",
       "Cliffside Park",
       "East Rutherford",
       "Edgewater",
+      "Emerson",
       "Fairview",
+      "Hillsdale",
       "Lyndhurst",
+      "Montvale",
       "North Arlington",
+      "Old Tappan",
+      "Oradell",
+      "Park Ridge",
       "Passaic",
       "Ridgefield",
+      "River Vale",
       "Rutherford",
       "Wallington",
-      "Wood-Ridge"
+      "Washington Twp",
+      "Westwood",
+      "Wood-Ridge",
+      "Woodcliff Lake"
     ],
     "meaning": "Third-party reported gateway activity; not measured RF coverage",
-    "total_unique_gateways": 575,
-    "total_unique_active_gateways": 52
+    "total_unique_gateways": 774,
+    "total_unique_active_gateways": 88
   },
   "cells": [
     {
@@ -533,6 +543,80 @@
       ]
     },
     {
+      "h3": "882a101925fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Old Tappan",
+        "River Vale"
+      ]
+    },
+    {
+      "h3": "882a101927fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Old Tappan",
+        "River Vale"
+      ]
+    },
+    {
+      "h3": "882a101929fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 2,
+      "municipalities": [
+        "Old Tappan"
+      ]
+    },
+    {
+      "h3": "882a10192dfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Old Tappan"
+      ]
+    },
+    {
+      "h3": "882a10193dfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "River Vale"
+      ]
+    },
+    {
+      "h3": "882a101945fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 1,
+      "municipalities": [
+        "Old Tappan"
+      ]
+    },
+    {
+      "h3": "882a101947fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Old Tappan"
+      ]
+    },
+    {
+      "h3": "882a10196bfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 2,
+      "municipalities": [
+        "Old Tappan"
+      ]
+    },
+    {
       "h3": "882a1044d3fffff",
       "count": 0,
       "active_count": 0,
@@ -966,6 +1050,699 @@
       ]
     },
     {
+      "h3": "882a10544bfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Washington Twp"
+      ]
+    },
+    {
+      "h3": "882a105453fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Washington Twp"
+      ]
+    },
+    {
+      "h3": "882a105457fffff",
+      "count": 2,
+      "active_count": 2,
+      "registered_count": 3,
+      "municipalities": [
+        "Washington Twp"
+      ]
+    },
+    {
+      "h3": "882a105459fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 1,
+      "municipalities": [
+        "Washington Twp"
+      ]
+    },
+    {
+      "h3": "882a10545bfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Washington Twp"
+      ]
+    },
+    {
+      "h3": "882a10545dfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Washington Twp"
+      ]
+    },
+    {
+      "h3": "882a105601fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 2,
+      "municipalities": [
+        "Hillsdale",
+        "Woodcliff Lake"
+      ]
+    },
+    {
+      "h3": "882a105603fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 5,
+      "municipalities": [
+        "Hillsdale",
+        "Woodcliff Lake"
+      ]
+    },
+    {
+      "h3": "882a105605fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 2,
+      "municipalities": [
+        "Woodcliff Lake"
+      ]
+    },
+    {
+      "h3": "882a105607fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 3,
+      "municipalities": [
+        "Hillsdale",
+        "Woodcliff Lake"
+      ]
+    },
+    {
+      "h3": "882a105609fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 3,
+      "municipalities": [
+        "Park Ridge",
+        "Woodcliff Lake"
+      ]
+    },
+    {
+      "h3": "882a10560dfffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 1,
+      "municipalities": [
+        "Park Ridge",
+        "Woodcliff Lake"
+      ]
+    },
+    {
+      "h3": "882a105611fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 2,
+      "municipalities": [
+        "Hillsdale",
+        "River Vale",
+        "Westwood"
+      ]
+    },
+    {
+      "h3": "882a105613fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 3,
+      "municipalities": [
+        "Hillsdale",
+        "River Vale",
+        "Westwood"
+      ]
+    },
+    {
+      "h3": "882a105615fffff",
+      "count": 2,
+      "active_count": 2,
+      "registered_count": 3,
+      "municipalities": [
+        "Hillsdale",
+        "Westwood"
+      ]
+    },
+    {
+      "h3": "882a105617fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Hillsdale",
+        "Westwood"
+      ]
+    },
+    {
+      "h3": "882a105619fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 3,
+      "municipalities": [
+        "Hillsdale",
+        "River Vale"
+      ]
+    },
+    {
+      "h3": "882a10561bfffff",
+      "count": 2,
+      "active_count": 2,
+      "registered_count": 3,
+      "municipalities": [
+        "Hillsdale",
+        "River Vale",
+        "Westwood"
+      ]
+    },
+    {
+      "h3": "882a10561dfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 3,
+      "municipalities": [
+        "Hillsdale"
+      ]
+    },
+    {
+      "h3": "882a105621fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Hillsdale",
+        "Woodcliff Lake"
+      ]
+    },
+    {
+      "h3": "882a105623fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 3,
+      "municipalities": [
+        "Hillsdale",
+        "Woodcliff Lake"
+      ]
+    },
+    {
+      "h3": "882a105625fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Woodcliff Lake"
+      ]
+    },
+    {
+      "h3": "882a105627fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 3,
+      "municipalities": [
+        "Hillsdale",
+        "Woodcliff Lake"
+      ]
+    },
+    {
+      "h3": "882a105629fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Woodcliff Lake"
+      ]
+    },
+    {
+      "h3": "882a10562bfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Hillsdale",
+        "Woodcliff Lake"
+      ]
+    },
+    {
+      "h3": "882a105631fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 3,
+      "municipalities": [
+        "Hillsdale",
+        "Washington Twp"
+      ]
+    },
+    {
+      "h3": "882a105635fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 2,
+      "municipalities": [
+        "Hillsdale",
+        "Washington Twp"
+      ]
+    },
+    {
+      "h3": "882a105637fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 2,
+      "municipalities": [
+        "Washington Twp"
+      ]
+    },
+    {
+      "h3": "882a105639fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 3,
+      "municipalities": [
+        "Hillsdale"
+      ]
+    },
+    {
+      "h3": "882a10563bfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Hillsdale",
+        "Washington Twp",
+        "Westwood"
+      ]
+    },
+    {
+      "h3": "882a10563dfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 3,
+      "municipalities": [
+        "Hillsdale",
+        "Woodcliff Lake"
+      ]
+    },
+    {
+      "h3": "882a105641fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Montvale",
+        "Park Ridge"
+      ]
+    },
+    {
+      "h3": "882a105645fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 2,
+      "municipalities": [
+        "Montvale",
+        "Park Ridge"
+      ]
+    },
+    {
+      "h3": "882a105647fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 3,
+      "municipalities": [
+        "Park Ridge"
+      ]
+    },
+    {
+      "h3": "882a10564bfffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 1,
+      "municipalities": [
+        "Montvale",
+        "Park Ridge",
+        "River Vale"
+      ]
+    },
+    {
+      "h3": "882a10564dfffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 1,
+      "municipalities": [
+        "Montvale",
+        "Park Ridge"
+      ]
+    },
+    {
+      "h3": "882a105655fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 2,
+      "municipalities": [
+        "Hillsdale",
+        "Park Ridge",
+        "River Vale",
+        "Woodcliff Lake"
+      ]
+    },
+    {
+      "h3": "882a10565dfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Park Ridge",
+        "River Vale"
+      ]
+    },
+    {
+      "h3": "882a105661fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 3,
+      "municipalities": [
+        "Park Ridge",
+        "Woodcliff Lake"
+      ]
+    },
+    {
+      "h3": "882a105663fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 2,
+      "municipalities": [
+        "Park Ridge",
+        "Woodcliff Lake"
+      ]
+    },
+    {
+      "h3": "882a105665fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 3,
+      "municipalities": [
+        "Montvale",
+        "Park Ridge",
+        "Woodcliff Lake"
+      ]
+    },
+    {
+      "h3": "882a105667fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 2,
+      "municipalities": [
+        "Woodcliff Lake"
+      ]
+    },
+    {
+      "h3": "882a105669fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 2,
+      "municipalities": [
+        "Park Ridge"
+      ]
+    },
+    {
+      "h3": "882a10566bfffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 3,
+      "municipalities": [
+        "Park Ridge",
+        "Woodcliff Lake"
+      ]
+    },
+    {
+      "h3": "882a105683fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 2,
+      "municipalities": [
+        "Oradell"
+      ]
+    },
+    {
+      "h3": "882a105687fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 2,
+      "municipalities": [
+        "Oradell"
+      ]
+    },
+    {
+      "h3": "882a105689fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 3,
+      "municipalities": [
+        "Emerson",
+        "Oradell"
+      ]
+    },
+    {
+      "h3": "882a10568dfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 3,
+      "municipalities": [
+        "Emerson",
+        "Oradell"
+      ]
+    },
+    {
+      "h3": "882a105695fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 3,
+      "municipalities": [
+        "Oradell"
+      ]
+    },
+    {
+      "h3": "882a105699fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 2,
+      "municipalities": [
+        "Oradell"
+      ]
+    },
+    {
+      "h3": "882a10569dfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 2,
+      "municipalities": [
+        "Oradell"
+      ]
+    },
+    {
+      "h3": "882a1056a3fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 1,
+      "municipalities": [
+        "Oradell"
+      ]
+    },
+    {
+      "h3": "882a1056abfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 3,
+      "municipalities": [
+        "Emerson",
+        "Oradell"
+      ]
+    },
+    {
+      "h3": "882a1056b1fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 6,
+      "municipalities": [
+        "Oradell"
+      ]
+    },
+    {
+      "h3": "882a1056b9fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 1,
+      "municipalities": [
+        "Oradell"
+      ]
+    },
+    {
+      "h3": "882a1056bbfffff",
+      "count": 3,
+      "active_count": 3,
+      "registered_count": 4,
+      "municipalities": [
+        "Oradell"
+      ]
+    },
+    {
+      "h3": "882a1056bdfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 3,
+      "municipalities": [
+        "Oradell"
+      ]
+    },
+    {
+      "h3": "882a1056c1fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Emerson",
+        "Westwood"
+      ]
+    },
+    {
+      "h3": "882a1056c5fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 2,
+      "municipalities": [
+        "Emerson",
+        "Westwood"
+      ]
+    },
+    {
+      "h3": "882a1056c7fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 7,
+      "municipalities": [
+        "Emerson"
+      ]
+    },
+    {
+      "h3": "882a1056c9fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 2,
+      "municipalities": [
+        "Emerson",
+        "River Vale",
+        "Westwood"
+      ]
+    },
+    {
+      "h3": "882a1056cbfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Emerson",
+        "River Vale"
+      ]
+    },
+    {
+      "h3": "882a1056cdfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "River Vale",
+        "Westwood"
+      ]
+    },
+    {
+      "h3": "882a1056d5fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Emerson"
+      ]
+    },
+    {
+      "h3": "882a1056d7fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Oradell"
+      ]
+    },
+    {
+      "h3": "882a1056e1fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 2,
+      "municipalities": [
+        "Emerson",
+        "Westwood"
+      ]
+    },
+    {
+      "h3": "882a1056e3fffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 3,
+      "municipalities": [
+        "Emerson",
+        "Oradell",
+        "Westwood"
+      ]
+    },
+    {
+      "h3": "882a1056e5fffff",
+      "count": 2,
+      "active_count": 2,
+      "registered_count": 4,
+      "municipalities": [
+        "Washington Twp",
+        "Westwood"
+      ]
+    },
+    {
+      "h3": "882a1056e7fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Emerson",
+        "Washington Twp",
+        "Westwood"
+      ]
+    },
+    {
+      "h3": "882a1056ebfffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 4,
+      "municipalities": [
+        "Emerson",
+        "Westwood"
+      ]
+    },
+    {
+      "h3": "882a1056edfffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 3,
+      "municipalities": [
+        "Washington Twp",
+        "Westwood"
+      ]
+    },
+    {
       "h3": "882a107319fffff",
       "count": 0,
       "active_count": 0,
@@ -1076,6 +1853,162 @@
       "municipalities": [
         "Lyndhurst",
         "North Arlington"
+      ]
+    },
+    {
+      "h3": "882a10cc93fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Old Tappan"
+      ]
+    },
+    {
+      "h3": "882a10cc97fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Old Tappan"
+      ]
+    },
+    {
+      "h3": "882a10cca7fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 3,
+      "municipalities": [
+        "Montvale"
+      ]
+    },
+    {
+      "h3": "882a10ccb5fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 3,
+      "municipalities": [
+        "Montvale",
+        "River Vale"
+      ]
+    },
+    {
+      "h3": "882a10ccb7fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "River Vale"
+      ]
+    },
+    {
+      "h3": "882a10cd83fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 2,
+      "municipalities": [
+        "Montvale"
+      ]
+    },
+    {
+      "h3": "882a10cd85fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 2,
+      "municipalities": [
+        "Montvale"
+      ]
+    },
+    {
+      "h3": "882a10cd91fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Montvale"
+      ]
+    },
+    {
+      "h3": "882a10cd95fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Montvale"
+      ]
+    },
+    {
+      "h3": "882a10cd97fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Montvale",
+        "Park Ridge"
+      ]
+    },
+    {
+      "h3": "882a10cd99fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 2,
+      "municipalities": [
+        "Montvale"
+      ]
+    },
+    {
+      "h3": "882a10cd9bfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 3,
+      "municipalities": [
+        "Montvale"
+      ]
+    },
+    {
+      "h3": "882a10cd9dfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Montvale"
+      ]
+    },
+    {
+      "h3": "882a10cdb3fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Montvale",
+        "Woodcliff Lake"
+      ]
+    },
+    {
+      "h3": "882a10cdb9fffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 3,
+      "municipalities": [
+        "Montvale"
+      ]
+    },
+    {
+      "h3": "882a10cdbbfffff",
+      "count": 0,
+      "active_count": 0,
+      "registered_count": 1,
+      "municipalities": [
+        "Montvale"
+      ]
+    },
+    {
+      "h3": "882a10cdbdfffff",
+      "count": 1,
+      "active_count": 1,
+      "registered_count": 2,
+      "municipalities": [
+        "Montvale"
       ]
     }
   ]
