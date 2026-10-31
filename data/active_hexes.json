@@ -1,7 +1,7 @@
 {
   "metadata": {
     "source": "https://api-iot.heliumtools.org/v1/gateways/hex",
-    "retrieved_utc": "2026-10-30T22:28:12.432976+00:00",
+    "retrieved_utc": "2026-10-31T15:26:15.551866+00:00",
     "complete": true,
     "spatial_filter": "h3_polygon_intersects_municipality",
     "h3_resolution": 8,
@@ -31,8 +31,8 @@
       "Woodcliff Lake"
     ],
     "meaning": "Third-party reported gateway activity; not measured RF coverage",
-    "total_unique_gateways": 774,
-    "total_unique_active_gateways": 88
+    "total_unique_gateways": 776,
+    "total_unique_active_gateways": 89
   },
   "cells": [
     {
@@ -965,9 +965,9 @@
     },
     {
       "h3": "882a1046d7fffff",
-      "count": 1,
-      "active_count": 1,
-      "registered_count": 7,
+      "count": 2,
+      "active_count": 2,
+      "registered_count": 9,
       "municipalities": [
         "East Rutherford",
         "Rutherford"
@@ -1382,8 +1382,8 @@
     },
     {
       "h3": "882a10564bfffff",
-      "count": 1,
-      "active_count": 1,
+      "count": 0,
+      "active_count": 0,
       "registered_count": 1,
       "municipalities": [
         "Montvale",
@@ -1692,8 +1692,8 @@
     },
     {
       "h3": "882a1056e3fffff",
-      "count": 1,
-      "active_count": 1,
+      "count": 2,
+      "active_count": 2,
       "registered_count": 3,
       "municipalities": [
         "Emerson",
