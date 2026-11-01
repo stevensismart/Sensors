@@ -1,7 +1,7 @@
 {
   "metadata": {
     "source": "https://api-iot.heliumtools.org/v1/gateways/hex",
-    "retrieved_utc": "2026-10-31T15:26:15.551866+00:00",
+    "retrieved_utc": "2026-11-01T16:09:35.858411+00:00",
     "complete": true,
     "spatial_filter": "h3_polygon_intersects_municipality",
     "h3_resolution": 8,
@@ -32,7 +32,7 @@
     ],
     "meaning": "Third-party reported gateway activity; not measured RF coverage",
     "total_unique_gateways": 776,
-    "total_unique_active_gateways": 89
+    "total_unique_active_gateways": 90
   },
   "cells": [
     {
@@ -965,8 +965,8 @@
     },
     {
       "h3": "882a1046d7fffff",
-      "count": 2,
-      "active_count": 2,
+      "count": 3,
+      "active_count": 3,
       "registered_count": 9,
       "municipalities": [
         "East Rutherford",
