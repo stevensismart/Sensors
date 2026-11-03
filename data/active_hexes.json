@@ -1,7 +1,7 @@
 {
   "metadata": {
     "source": "https://api-iot.heliumtools.org/v1/gateways/hex",
-    "retrieved_utc": "2026-11-02T19:36:57.165250+00:00",
+    "retrieved_utc": "2026-11-03T17:11:19.488816+00:00",
     "complete": true,
     "spatial_filter": "h3_polygon_intersects_municipality",
     "h3_resolution": 8,
@@ -32,7 +32,7 @@
     ],
     "meaning": "Third-party reported gateway activity; not measured RF coverage",
     "total_unique_gateways": 776,
-    "total_unique_active_gateways": 89
+    "total_unique_active_gateways": 90
   },
   "cells": [
     {
@@ -1692,8 +1692,8 @@
     },
     {
       "h3": "882a1056e3fffff",
-      "count": 1,
-      "active_count": 1,
+      "count": 2,
+      "active_count": 2,
       "registered_count": 3,
       "municipalities": [
         "Emerson",
