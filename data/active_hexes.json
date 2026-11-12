@@ -1,7 +1,7 @@
 {
   "metadata": {
     "source": "https://api-iot.heliumtools.org/v1/gateways/hex",
-    "retrieved_utc": "2026-11-11T17:17:19.245799+00:00",
+    "retrieved_utc": "2026-11-12T17:41:36.690416+00:00",
     "complete": true,
     "spatial_filter": "h3_polygon_intersects_municipality",
     "h3_resolution": 8,
@@ -645,8 +645,8 @@
     },
     {
       "h3": "882a104613fffff",
-      "count": 2,
-      "active_count": 2,
+      "count": 1,
+      "active_count": 1,
       "registered_count": 7,
       "municipalities": [
         "Passaic",
@@ -1435,8 +1435,8 @@
     },
     {
       "h3": "882a105663fffff",
-      "count": 1,
-      "active_count": 1,
+      "count": 2,
+      "active_count": 2,
       "registered_count": 2,
       "municipalities": [
         "Park Ridge",
