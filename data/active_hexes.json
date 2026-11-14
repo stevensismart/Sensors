@@ -1,7 +1,7 @@
 {
   "metadata": {
     "source": "https://api-iot.heliumtools.org/v1/gateways/hex",
-    "retrieved_utc": "2026-11-13T17:18:57.852836+00:00",
+    "retrieved_utc": "2026-11-14T15:54:20.720013+00:00",
     "complete": true,
     "spatial_filter": "h3_polygon_intersects_municipality",
     "h3_resolution": 8,
@@ -1435,8 +1435,8 @@
     },
     {
       "h3": "882a105663fffff",
-      "count": 1,
-      "active_count": 1,
+      "count": 2,
+      "active_count": 2,
       "registered_count": 2,
       "municipalities": [
         "Park Ridge",
@@ -1692,8 +1692,8 @@
     },
     {
       "h3": "882a1056e3fffff",
-      "count": 2,
-      "active_count": 2,
+      "count": 1,
+      "active_count": 1,
       "registered_count": 3,
       "municipalities": [
         "Emerson",
