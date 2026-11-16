@@ -26,6 +26,13 @@
 <label><input id="showHex" type="checkbox" checked> Show H3 hotspot hexagons</label>
 <label><input id="showBounds" type="checkbox" checked> Show municipality boundaries</label>
 
+<section class="legacy-section" aria-label="Flood hazard overlay">
+<h3>Flood hazard</h3>
+<label class="legacy-inline"><input id="showFema" type="checkbox"> FEMA flood hazard zones (NFHL)</label>
+<p class="hint">Shows FEMA's official mapped flood hazard zones (not real-time flooding). For best detail, zoom to level 12 or higher.</p>
+<p id="overlayStatus" class="hint" role="status"></p>
+</section>
+
 <section class="legacy-section" aria-label="Historical hydrological sensor sites">
 <label class="legacy-inline"><input id="showLegacy" type="checkbox"> Show historical candidate / deployed pins</label>
 </section>
@@ -61,6 +68,42 @@ const tileLayer=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
   maxZoom:19,
   attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
+// FEMA official NFHL overlay using ArcGIS REST export.
+map.createPane('femaPane'); map.getPane('femaPane').style.zIndex='350';
+const FEMA_URL='https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer';
+function tileBBox3857(grid,coords){
+  const sz=grid.getTileSize(),nw=grid._map.unproject(L.point(coords.x*sz.x,coords.y*sz.y),coords.z),se=grid._map.unproject(L.point((coords.x+1)*sz.x,(coords.y+1)*sz.y),coords.z);
+  const a=L.CRS.EPSG3857.project(nw),b=L.CRS.EPSG3857.project(se);
+  return [a.x,b.y,b.x,a.y].join(',');
+}
+const FemaTiles=L.GridLayer.extend({
+  createTile(coords,done){
+    const t=document.createElement('img');t.alt='';t.setAttribute('role','presentation');
+    const bbox=tileBBox3857(this,coords),sz=this.getTileSize();
+    const args=new URLSearchParams({f:'image',bbox,bboxSR:'3857',imageSR:'3857',size:`${sz.x},${sz.y}`,format:'png32',transparent:'true',layers:'show:28',dpi:'96'});
+    t.src=FEMA_URL+'/export?'+args;
+    t.onload=()=>done(null,t);
+    t.onerror=()=>done(new Error('FEMA map image failed'),t);
+    return t;
+  }
+});
+const femaLayer=new FemaTiles({pane:'femaPane',opacity:0.82,maxZoom:19,attribution:'FEMA NFHL'});
+const overlayStatus=document.getElementById('overlayStatus');
+function setOverlay(toggle,layer,name){
+  if(toggle.checked){
+    layer.addTo(map);
+    overlayStatus.textContent=name+' enabled.'+(map.getZoom()<12?' Zoom in to level 12+ for best FEMA detail.':'');
+  }else{
+    map.removeLayer(layer);
+    overlayStatus.textContent=name+' hidden.';
+  }
+}
+document.getElementById('showFema').addEventListener('change',e=>setOverlay(e.target,femaLayer,'FEMA NFHL'));
+map.on('zoomend',()=>{
+  if(document.getElementById('showFema').checked){
+    overlayStatus.textContent='FEMA NFHL enabled.'+(map.getZoom()<12?' Zoom in to level 12+ for best FEMA detail.':'');
+  }
+});
 const hexLayer=L.layerGroup().addTo(map),boundaryLayer=L.geoJSON(null,{style:{color:'#235eab',weight:2,fillOpacity:.035},onEachFeature:(feature,layer)=>layer.bindTooltip(feature.properties.name||'Municipality')}).addTo(map);
 const townEl=document.getElementById('town'),statusEl=document.getElementById('status');
 
