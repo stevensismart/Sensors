@@ -16,6 +16,11 @@
 .legacy-key{display:flex;gap:15px;flex-wrap:wrap;font-size:12px;margin-top:10px}
 .legacy-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;background:#3676b5}
 .legacy-dot.deployed{background:#198754}
+
+/* Calibrated 3DEP heatmap legend. Render above OSM and below all analytical layers. */
+.terrain-legend{margin:9px 0;padding:10px;background:#fff;border:1px solid #dbe3ed;border-radius:8px}
+.terrain-gradient{height:17px;border-radius:4px;border:1px solid #9aa8bb;background:linear-gradient(90deg,#2166ac 0%,#2b83ba 11%,#67a9cf 22%,#4daf8b 33%,#66bd63 44%,#d9ef8b 55%,#fee08b 66%,#fdae61 77%,#f46d43 88%,#d73027 100%)}
+.terrain-legend-ticks{display:flex;justify-content:space-between;font-size:10px;color:#43536b;margin-top:4px}
 </style></head><body>
 <header><div><h1>Helium IoT · New Jersey</h1></div></header>
 <div class="layout"><aside>
@@ -25,6 +30,27 @@
 <label for="minCount">Minimum registrations per cell: <strong id="minCountValue">1</strong></label><input id="minCount" type="range" min="1" max="20" step="1" value="1" style="width:100%">
 <label><input id="showHex" type="checkbox" checked> Show H3 hotspot hexagons</label>
 <label><input id="showBounds" type="checkbox" checked> Show municipality boundaries</label>
+
+<section class="legacy-section" aria-label="Terrain and elevation overlay">
+<h3>Terrain &amp; elevation (USGS 3DEP)</h3>
+<label class="legacy-inline"><input id="showTerrain" type="checkbox"> Show terrain inside study municipalities</label>
+<label for="terrainStyle">Terrain visualization</label>
+<select id="terrainStyle">
+<option value="heatmap">Elevation heatmap (meters — recommended)</option>
+<option value="tinted">Elevation-tinted hillshade</option>
+<option value="hillshade">Grayscale hillshade</option>
+<option value="slope">Slope map</option>
+</select>
+<div id="terrainLegend" class="terrain-legend" hidden aria-label="Elevation heatmap color legend">
+  <div class="terrain-gradient" role="img" aria-label="Elevation gradient: blue at 0 m, green at 40 m, yellow at 80 m, orange at 120 m, red at 180 m"></div>
+  <div class="terrain-legend-ticks"><span>0 m</span><span>40</span><span>80</span><span>120</span><span>180+ m</span></div>
+  <p class="hint" style="margin:5px 0 0">USGS bare-earth elevation, meters. Colors use fixed ~5 m classes (below 0 m is dark blue; above 180 m is red). They indicate absolute elevation, not flood depth.</p>
+</div>
+<label for="terrainOpacity">Terrain opacity</label>
+<input id="terrainOpacity" type="range" min="15" max="100" step="5" value="75" style="width:100%">
+<p id="terrainStatus" class="hint" role="status">Terrain layer hidden.</p>
+<p class="hint">USGS 3DEP bare-earth DEM visualization. Mask follows all 22 municipalities, or only the selected municipality. Elevation display is not a flood prediction or low-point extraction.</p>
+</section>
 
 <section class="legacy-section" aria-label="Flood hazard overlay">
 <h3>Flood hazard</h3>
@@ -126,7 +152,7 @@ datasetEl.addEventListener('change',switchDataset);minCountEl.addEventListener('
 document.getElementById('reset').addEventListener('click',()=>{townEl.value='';if(boundaryLayer.getLayers().length)map.fitBounds(boundaryLayer.getBounds().pad(.06));else map.fitBounds(NJ_BOUNDS);render();});
 
 async function loadJSON(url){const res=await fetch(url,{cache:'no-store'});if(!res.ok)throw Error(`${url}: HTTP ${res.status}`);return res.json();}
-(async()=>{let messages=[];try{const geo=await loadJSON('./data/municipalities.geojson');boundaries=geo.features||[];if(!boundaries.length)throw Error('Empty municipality boundary file');for(const name of [...new Set(boundaries.map(normalizeName))].sort())townEl.add(new Option(name,name));boundaryLayer.addData({type:'FeatureCollection',features:boundaries});messages.push(`${boundaries.length} municipality boundaries loaded.`);if(boundaries.length){const b=boundaryLayer.getBounds();if(b.isValid())map.fitBounds(b.pad(.06));}}catch(e){messages.push('Municipality boundaries missing. Run the data preparation script.');console.warn(e);}try{const data=await loadJSON('./data/hexes.json');assertMeta=data.metadata||{};assertions=(Array.isArray(data)?data:data.cells||[]).filter(c=>typeof c.h3==='string'&&h3.isValidCell(c.h3));messages.push(`${assertions.length} municipality-intersecting registered-hotspot H3 cells loaded.`);if(assertMeta.spatial_filter!=='h3_polygon_intersects_municipality')messages.push('WARNING: legacy dataset; regenerate with the new downloader.');if(assertMeta.complete!==true)messages.push('WARNING: source download not confirmed complete.');}catch(e){messages.push('Hexagon data missing. Run the Helium downloader.');console.warn(e);}try{const ad=await loadJSON('./data/active_hexes.json');activeMeta=ad.metadata||{};activeCells=(ad.cells||[]).filter(c=>typeof c.h3==='string'&&h3.isValidCell(c.h3)&&Array.isArray(c.municipalities));messages.push(`${activeCells.length} active-gateway dataset cells loaded.`);}catch(e){console.info('No active-gateway dataset yet',e);}if(!activeCells.length){datasetEl.options[0].disabled=true;datasetEl.options[0].text='Reported active gateways (not downloaded)';datasetEl.value='assertions';}
+(async()=>{let messages=[];try{const geo=await loadJSON('./data/municipalities.geojson');boundaries=geo.features||[];if(!boundaries.length)throw Error('Empty municipality boundary file');for(const name of [...new Set(boundaries.map(normalizeName))].sort())townEl.add(new Option(name,name));boundaryLayer.addData({type:'FeatureCollection',features:boundaries});window.dispatchEvent(new Event('municipality-boundaries-ready'));messages.push(`${boundaries.length} municipality boundaries loaded.`);if(boundaries.length){const b=boundaryLayer.getBounds();if(b.isValid())map.fitBounds(b.pad(.06));}}catch(e){messages.push('Municipality boundaries missing. Run the data preparation script.');console.warn(e);}try{const data=await loadJSON('./data/hexes.json');assertMeta=data.metadata||{};assertions=(Array.isArray(data)?data:data.cells||[]).filter(c=>typeof c.h3==='string'&&h3.isValidCell(c.h3));messages.push(`${assertions.length} municipality-intersecting registered-hotspot H3 cells loaded.`);if(assertMeta.spatial_filter!=='h3_polygon_intersects_municipality')messages.push('WARNING: legacy dataset; regenerate with the new downloader.');if(assertMeta.complete!==true)messages.push('WARNING: source download not confirmed complete.');}catch(e){messages.push('Hexagon data missing. Run the Helium downloader.');console.warn(e);}try{const ad=await loadJSON('./data/active_hexes.json');activeMeta=ad.metadata||{};activeCells=(ad.cells||[]).filter(c=>typeof c.h3==='string'&&h3.isValidCell(c.h3)&&Array.isArray(c.municipalities));messages.push(`${activeCells.length} active-gateway dataset cells loaded.`);}catch(e){console.info('No active-gateway dataset yet',e);}if(!activeCells.length){datasetEl.options[0].disabled=true;datasetEl.options[0].text='Reported active gateways (not downloaded)';datasetEl.value='assertions';}
 statusEl.textContent=messages.join(' ');if(!boundaries.length||!assertions.length)statusEl.classList.add('error');switchDataset();window.dispatchEvent(new Event("helium-data-ready"));})();
 
 /* Historical sensor sites, embedded directly so only index.html is needed.
@@ -480,4 +506,4 @@ function renderLegacy() {
 legacyToggle.addEventListener('change',renderLegacy);
 renderLegacy();
 
-</script><script src="./js/flood-candidates.js"></script></body></html>
+</script><script src="./js/terrain.js"></script><script src="./js/flood-candidates.js"></script></body></html>
