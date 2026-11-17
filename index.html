@@ -52,6 +52,20 @@
 <p class="hint">USGS 3DEP bare-earth DEM visualization. Mask follows all 22 municipalities, or only the selected municipality. Elevation display is not a flood prediction or low-point extraction.</p>
 </section>
 
+<section class="legacy-section" aria-label="DEM depression zones">
+<h3>DEM-derived depression zones</h3>
+<label class="legacy-inline"><input id="showDepressionZones" type="checkbox"> Show closed depression areas (polygons only)</label>
+<label for="depressionMinArea">Minimum depression area</label>
+<select id="depressionMinArea"><option value="25">25 m² (all candidates)</option><option value="100">100 m²</option><option value="250">250 m²</option><option value="500" selected>500 m² (recommended)</option><option value="1000">1,000 m²</option><option value="2500">2,500 m²</option><option value="5000">5,000 m²</option></select>
+<label for="depressionMinDepth">Minimum maximum-fill depth</label>
+<select id="depressionMinDepth"><option value="0.5">0.5 m</option><option value="1" selected>1.0 m (recommended)</option><option value="2">2.0 m</option><option value="3">3.0 m</option></select>
+<label class="legacy-inline"><input id="showExaggeratedDem" type="checkbox"> Show exaggerated DEM hillshade</label>
+<label for="demExaggeration">Hillshade vertical exaggeration: <strong id="demExaggerationValue">3×</strong></label>
+<select id="demExaggeration"><option value="1">1× (normal)</option><option value="3" selected>3×</option><option value="5">5×</option></select>
+<p id="depressionZoneStatus" class="hint" role="status">Analysis layers hidden.</p>
+<p class="hint">Polygons only (low-point markers disabled). Derived from local 5 m sampled DEM; candidate closed depressions only. Not modeled flood depth or an official flood hazard zone. Exaggeration affects visualization, not elevation calculations.</p>
+</section>
+
 <section class="legacy-section" aria-label="Flood hazard overlay">
 <h3>Flood hazard</h3>
 <label class="legacy-inline"><input id="showFema" type="checkbox"> FEMA flood hazard zones (NFHL)</label>
@@ -506,4 +520,4 @@ function renderLegacy() {
 legacyToggle.addEventListener('change',renderLegacy);
 renderLegacy();
 
-</script><script src="./js/terrain.js"></script><script src="./js/flood-candidates.js"></script></body></html>
+</script><script src="./js/terrain.js"></script><script src="./js/flood-candidates.js"></script><script src="./js/depression-zones.js"></script></body></html>

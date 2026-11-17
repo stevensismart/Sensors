@@ -1,0 +1,23 @@
+{
+  "bounds_latlon": [
+    [
+      40.760405491012904,
+      -74.14784607252551
+    ],
+    [
+      41.07337030857936,
+      -73.95059933876514
+    ]
+  ],
+  "pixel_size_m": [
+    5.0,
+    5.0
+  ],
+  "zone_count": 2487,
+  "low_point_count": 2487,
+  "min_depth_m": 0.5,
+  "min_area_m2": 25.0,
+  "footprint_depth_m": 0.05,
+  "analysis": "closed depression candidates from raster reconstruction",
+  "warning": "Boundary-clipped DEM: boundary-touching candidates excluded; not a flood hazard designation."
+}
