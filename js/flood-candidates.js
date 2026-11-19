@@ -5,7 +5,16 @@
   const layer = L.layerGroup();
   const colors = {'Fluvial':'#1f6fd1','Pluvial':'#8e44ad','Fluvial + pluvial':'#e67e22'};
   let sites = [], loaded = false;
-  const selected = () => sites.filter(f => ['Town','Exp','Pri'].every((suffix,i) => !el('flood'+suffix).value || f.properties[['town','exp','pri'][i]] === el('flood'+suffix).value));
+  function refreshFloodTownOptions(){
+    const townSelect=el('floodTown');
+    const previous=townSelect.value;
+    townSelect.replaceChildren(new Option('All candidate municipalities',''));
+    for(const value of [...new Set(sites.map(f=>f.properties.town))].sort()){
+      if(regionAllowsTown(value))townSelect.add(new Option(value,value));
+    }
+    townSelect.value=regionAllowsTown(previous)?previous:'';
+  }
+  const selected = () => sites.filter(f => regionAllowsTown(f.properties.town) && ['Town','Exp','Pri'].every((suffix,i) => !el('flood'+suffix).value || f.properties[['town','exp','pri'][i]] === el('flood'+suffix).value));
   function currentGateways(f) {
     if (!activeCells.length) return 'Unavailable: active dataset not loaded';
     const [lng,lat] = f.geometry.coordinates;
@@ -38,6 +47,7 @@
   }
   ['showFlood','floodTown','floodExp','floodPri'].forEach(id=>el(id).addEventListener('change',render));
   window.addEventListener('helium-data-ready',render);
+  window.addEventListener('municipality-region-changed',()=>{refreshFloodTownOptions();render();});
   el('zoomFlood').addEventListener('click',()=>{const rows=selected();if(!rows.length)return;el('showFlood').checked=true;render();map.fitBounds(L.latLngBounds(rows.map(f=>[f.geometry.coordinates[1],f.geometry.coordinates[0]])).pad(.08),{maxZoom:16});});
   (async()=>{
     try {
@@ -49,8 +59,8 @@
         if(f.type!=='Feature'||f.geometry?.type!=='Point'||!Array.isArray(c)||c.length!==2||!c.every(Number.isFinite)||Math.abs(c[0])>180||Math.abs(c[1])>90||!p||typeof p.id!=='string'||ids.has(p.id)||!p.town||!p.addr||!Object.hasOwn(colors,p.exp)||!['1 - High','2 - Medium','3 - Low'].includes(p.pri))throw Error('Invalid candidate or duplicate ID');
         ids.add(p.id);
       }
-      sites=geo.features; loaded=true;
-      for(const [suffix,key] of [['Town','town'],['Exp','exp'],['Pri','pri']])for(const value of [...new Set(sites.map(f=>f.properties[key]))].sort())el('flood'+suffix).add(new Option(value,value));
+      sites=geo.features.filter(f=>regionAllowsTown(f.properties.town)); loaded=true;
+      refreshFloodTownOptions();for(const [suffix,key] of [['Exp','exp'],['Pri','pri']])for(const value of [...new Set(sites.map(f=>f.properties[key]))].sort())el('flood'+suffix).add(new Option(value,value));
       el('floodStatus').textContent=sites.length+' screening candidates loaded. Independent filters apply only to this layer.';render();
     } catch(error) {
       el('floodStatus').textContent='Flood candidates could not load: '+error.message+'. Check data/flood_candidates.geojson and serve the map over HTTP.';el('floodStatus').classList.add('error');
