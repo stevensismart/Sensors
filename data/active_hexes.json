@@ -1,7 +1,7 @@
 {
   "metadata": {
     "source": "https://api-iot.heliumtools.org/v1/gateways/hex",
-    "retrieved_utc": "2026-11-20T17:55:21.422562+00:00",
+    "retrieved_utc": "2026-11-21T16:52:57.170407+00:00",
     "complete": true,
     "spatial_filter": "h3_polygon_intersects_municipality",
     "h3_resolution": 8,
@@ -767,8 +767,8 @@
     },
     {
       "h3": "882a104693fffff",
-      "count": 1,
-      "active_count": 1,
+      "count": 0,
+      "active_count": 0,
       "registered_count": 2,
       "municipalities": [
         "Lyndhurst"
@@ -1024,8 +1024,8 @@
     },
     {
       "h3": "882a1046e9fffff",
-      "count": 2,
-      "active_count": 2,
+      "count": 3,
+      "active_count": 3,
       "registered_count": 12,
       "municipalities": [
         "Passaic"
