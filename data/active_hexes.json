@@ -1,7 +1,7 @@
 {
   "metadata": {
     "source": "https://api-iot.heliumtools.org/v1/gateways/hex",
-    "retrieved_utc": "2026-11-24T20:16:22.599535+00:00",
+    "retrieved_utc": "2026-11-25T19:26:37.206721+00:00",
     "complete": true,
     "spatial_filter": "h3_polygon_intersects_municipality",
     "h3_resolution": 8,
@@ -32,7 +32,7 @@
     ],
     "meaning": "Third-party reported gateway activity; not measured RF coverage",
     "total_unique_gateways": 776,
-    "total_unique_active_gateways": 89
+    "total_unique_active_gateways": 88
   },
   "cells": [
     {
@@ -1425,8 +1425,8 @@
     },
     {
       "h3": "882a105661fffff",
-      "count": 1,
-      "active_count": 1,
+      "count": 0,
+      "active_count": 0,
       "registered_count": 3,
       "municipalities": [
         "Park Ridge",
